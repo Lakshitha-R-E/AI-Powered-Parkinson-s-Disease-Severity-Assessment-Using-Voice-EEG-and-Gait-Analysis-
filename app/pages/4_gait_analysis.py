@@ -15,7 +15,7 @@ import streamlit as st
 
 from src.processing.unified_loader import get_available_sample_files, load_and_process_gait
 
-st.set_page_config(page_title="Gait Analysis", page_icon="??", layout="wide")
+st.set_page_config(page_title="Gait Analysis", page_icon="🚶", layout="wide")
 st.markdown("""<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 html,body,[class*="css"]{font-family:'Inter',sans-serif;}
@@ -25,30 +25,30 @@ html,body,[class*="css"]{font-family:'Inter',sans-serif;}
 .stButton>button{background:linear-gradient(135deg,#6366f1,#4f46e5)!important;color:white!important;border:none!important;border-radius:10px!important;font-weight:600!important;}
 </style>""", unsafe_allow_html=True)
 
-st.markdown('<h1 style="color:#e2e8f0;">?? Gait & Kinetic Signal Analysis</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="color:#e2e8f0;">🚶 Gait &amp; Kinetic Signal Analysis</h1>', unsafe_allow_html=True)
 st.markdown('<p style="color:#94a3b8;">Analyze IMU accelerometer and force sensor signals to evaluate stride length, cadence, freeze index, and gait asymmetry.</p>', unsafe_allow_html=True)
 
 samples = get_available_sample_files()
 
-tab_upload, tab_sample = st.tabs(["?? Upload Gait Signal", "?? Select from PhysioNet Gait Dataset"])
+tab_upload, tab_sample = st.tabs(["📤 Upload Gait Signal", "📁 Select from PhysioNet Gait Dataset"])
 
 gait_target = None
 with tab_upload:
     gait_file = st.file_uploader("Upload Gait file (.txt, .csv, .tsv, .npy)", type=["txt", "csv", "tsv", "npy"])
     if gait_file:
         gait_target = gait_file
-        st.success(f"? {gait_file.name} ({gait_file.size//1024} KB)")
+        st.success(f"✅ {gait_file.name} ({gait_file.size//1024} KB)")
 
 with tab_sample:
     g_choices = ["None"] + list(samples["gait"].keys())
     g_sel = st.selectbox("Choose Sample from Dataset", g_choices, index=1 if len(g_choices)>1 else 0)
     if g_sel != "None":
         gait_target = samples["gait"][g_sel]
-        st.caption(f"?? Path: {Path(gait_target).name}")
+        st.caption(f"📁 Path: {Path(gait_target).name}")
 
 col_btn, col_demo = st.columns([2, 3])
 with col_btn:
-    analyze = st.button("?? Analyze Gait Signal", type="primary")
+    analyze = st.button("🔬 Analyze Gait Signal", type="primary")
 with col_demo:
     use_demo = st.checkbox("Use synthetic gait demo if no file provided", value=False)
 
@@ -89,8 +89,8 @@ if analyze or gait_target is not None:
                 "RMS Vertical Acceleration": 0.82, "Jerk RMS": 1.43,
             }
 
-    st.success(f"? Gait signal processed ({len(accel_v)} samples @ {fs:.0f} Hz)!")
-    tab1, tab2, tab3 = st.tabs(["?? Multiaxial Accelerometer", "?? Gait Kinetic Features", "?? Heel Strike & Phase Events"])
+    st.success(f"✅ Gait signal processed ({len(accel_v)} samples @ {fs:.0f} Hz)!")
+    tab1, tab2, tab3 = st.tabs(["📈 Multiaxial Accelerometer", "📊 Gait Kinetic Features", "⏱️ Heel Strike & Phase Events"])
 
     with tab1:
         samples_show = min(500, len(accel_v))

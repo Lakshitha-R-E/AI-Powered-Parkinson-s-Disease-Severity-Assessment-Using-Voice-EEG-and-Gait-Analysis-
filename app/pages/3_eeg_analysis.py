@@ -15,7 +15,7 @@ import streamlit as st
 
 from src.processing.unified_loader import get_available_sample_files, load_and_process_eeg
 
-st.set_page_config(page_title="EEG Analysis", page_icon="??", layout="wide")
+st.set_page_config(page_title="EEG Analysis", page_icon="🧠", layout="wide")
 st.markdown("""<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 html,body,[class*="css"]{font-family:'Inter',sans-serif;}
@@ -25,30 +25,30 @@ html,body,[class*="css"]{font-family:'Inter',sans-serif;}
 .stButton>button{background:linear-gradient(135deg,#6366f1,#4f46e5)!important;color:white!important;border:none!important;border-radius:10px!important;font-weight:600!important;}
 </style>""", unsafe_allow_html=True)
 
-st.markdown('<h1 style="color:#e2e8f0;">?? EEG Signal Analysis</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="color:#e2e8f0;">🧠 EEG Signal Analysis</h1>', unsafe_allow_html=True)
 st.markdown('<p style="color:#94a3b8;">Extract frequency band powers, spectral density, coherence, and cortical dynamics from EEG signals.</p>', unsafe_allow_html=True)
 
 samples = get_available_sample_files()
 
-tab_upload, tab_sample = st.tabs(["?? Upload EEG Signal", "?? Select from PRED+CT EEG Dataset"])
+tab_upload, tab_sample = st.tabs(["📤 Upload EEG Signal", "📁 Select from PRED+CT EEG Dataset"])
 
 eeg_target = None
 with tab_upload:
     eeg_file = st.file_uploader("Upload EEG file (.set, .edf, .npy, .csv, .tsv, .txt)", type=["set", "edf", "npy", "csv", "tsv", "txt"])
     if eeg_file:
         eeg_target = eeg_file
-        st.success(f"? {eeg_file.name} ({eeg_file.size//1024} KB)")
+        st.success(f"✅ {eeg_file.name} ({eeg_file.size//1024} KB)")
 
 with tab_sample:
     e_choices = ["None"] + list(samples["eeg"].keys())
     e_sel = st.selectbox("Choose Sample from Dataset", e_choices, index=1 if len(e_choices)>1 else 0)
     if e_sel != "None":
         eeg_target = samples["eeg"][e_sel]
-        st.caption(f"?? Path: {Path(eeg_target).name}")
+        st.caption(f"📁 Path: {Path(eeg_target).name}")
 
 col_btn, col_demo = st.columns([2, 3])
 with col_btn:
-    analyze = st.button("?? Analyze EEG Signal", type="primary")
+    analyze = st.button("🔬 Analyze EEG Signal", type="primary")
 with col_demo:
     use_demo = st.checkbox("Use synthetic EEG demo if no file provided", value=False)
 
@@ -79,8 +79,8 @@ if analyze or eeg_target is not None:
                     eeg[i] += band_powers[b] * np.sin(2 * np.pi * f * t + np.random.uniform(0, 2 * np.pi))
                 eeg[i] += 0.05 * np.random.randn(len(t))
 
-    st.success(f"? EEG signals processed successfully ({n_ch} channels @ {fs:.0f} Hz)!")
-    tab1, tab2, tab3, tab4 = st.tabs(["?? Raw EEG Channels", "?? Frequency Band Powers", "?? Functional Connectivity (PLV)", "?? Coherence & Spectrum"])
+    st.success(f"✅ EEG signals processed successfully ({n_ch} channels @ {fs:.0f} Hz)!")
+    tab1, tab2, tab3, tab4 = st.tabs(["📈 Raw EEG Channels", "🔵 Frequency Band Powers", "🔗 Functional Connectivity (PLV)", "📊 Coherence & Spectrum"])
 
     with tab1:
         fig = go.Figure()
