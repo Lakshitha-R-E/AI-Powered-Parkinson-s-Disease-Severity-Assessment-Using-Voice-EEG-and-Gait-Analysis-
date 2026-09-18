@@ -98,25 +98,25 @@ with tab_sample:
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**🎤 Select Voice Sample**")
-        v_choices = ["None"] + list(samples["voice"].keys())
-        v_sel = st.selectbox("Voice Sample", v_choices, index=1 if len(v_choices)>1 else 0)
-        if v_sel != "None":
+        v_choices = ["-- Select --"] + list(samples["voice"].keys())
+        v_sel = st.selectbox("Voice Sample", v_choices, index=0)
+        if v_sel != "-- Select --":
             voice_target = samples["voice"][v_sel]
             st.caption(f"📁 Path: {Path(voice_target).name}")
             
     with col2:
         st.markdown("**🧠 Select EEG Sample**")
-        e_choices = ["None"] + list(samples["eeg"].keys())
-        e_sel = st.selectbox("EEG Sample", e_choices, index=1 if len(e_choices)>1 else 0)
-        if e_sel != "None":
+        e_choices = ["-- Select --"] + list(samples["eeg"].keys())
+        e_sel = st.selectbox("EEG Sample", e_choices, index=0)
+        if e_sel != "-- Select --":
             eeg_target = samples["eeg"][e_sel]
             st.caption(f"📁 Path: {Path(eeg_target).name}")
             
     with col3:
         st.markdown("**🚶 Select Gait Sample**")
-        g_choices = ["None"] + list(samples["gait"].keys())
-        g_sel = st.selectbox("Gait Sample", g_choices, index=1 if len(g_choices)>1 else 0)
-        if g_sel != "None":
+        g_choices = ["-- Select --"] + list(samples["gait"].keys())
+        g_sel = st.selectbox("Gait Sample", g_choices, index=0)
+        if g_sel != "-- Select --":
             gait_target = samples["gait"][g_sel]
             st.caption(f"📁 Path: {Path(gait_target).name}")
 
